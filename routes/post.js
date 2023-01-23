@@ -11,7 +11,7 @@ router.post('/', checkAuth, createPost);
 
 // Get All Post
 // http://localhost:3002/api/posts
-router.get('/', getAll);
+// router.get('/', getAll);
 
 // Get Post By Id
 // http://localhost:3002/api/posts/:id

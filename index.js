@@ -6,6 +6,7 @@ import fileUpload from 'express-fileupload';
 import authRoute from './routes/auth.js';
 import postRoute from './routes/post.js';
 import commentRoute from './routes/comments.js'
+import { getAll } from './controllers/posts.js';
 
 mongoose.set('strictQuery', false);
 
@@ -35,6 +36,8 @@ app.get('/', (req, res) => {
     message: 'All is fine.'
   })
 })
+
+app.get('/api/posts', getAll);
 
 // async function start() {
 //   try {
