@@ -31,23 +31,35 @@ app.use('/api/posts', postRoute);
 app.use('/api/comments', commentRoute);
 
 app.get('/', (req, res) => {
-  return res.json({
+  res.send({
     message: 'All is fine.'
   })
 })
 
-async function start() {
-  try {
-    // await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@lyka.qjfwbgw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`);
-    await mongoose.connect(process.env.MONGODB_URI);
+// async function start() {
+//   try {
+//     // await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@lyka.qjfwbgw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`);
+//     await mongoose.connect(process.env.MONGODB_URI);
 
-    app.listen(PORT, () => console.log(`Server started on port: ${PORT}`)
-    );
+//     app.listen(PORT, () => console.log(`Server started on port: ${PORT}`)
+//     );
 
-  } catch (error) {
-    console.log(error)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log('DB ok'))
+  .catch((err) => console.log('DB error', err));
+
+// start();
+
+app.listen(PORT, (err) => {
+  if (err) {
+    return console.log(err);
   }
-}
 
-start();
-
+  console.log('Server OK');
+});
