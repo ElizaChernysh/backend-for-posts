@@ -14,7 +14,7 @@ const app = express();
 dotenv.config();
 
 //Constants 
-// const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 // const DB_USER = process.env.DB_USER;
 // const DB_PASSWORD = process.env.DB_PASSWORD;
 // const DB_NAME = process.env.DB_NAME;
@@ -39,30 +39,30 @@ app.get('/', (req, res) => {
 
 app.get('/api/posts', getAll);
 
-// async function start() {
-//   try {
-//     // await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@lyka.qjfwbgw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`);
-//     await mongoose.connect(process.env.MONGODB_URI);
+async function start() {
+  try {
+    // await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@lyka.qjfwbgw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`);
+    await mongoose.connect(process.env.MONGODB_URI);
 
-//     app.listen(PORT, () => console.log(`Server started on port: ${PORT}`)
-//     );
+    app.listen(PORT, () => console.log(`Server started on port: ${PORT}`)
+    );
 
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log('DB ok'))
-  .catch((err) => console.log('DB error', err));
-
-// start();
-
-app.listen(process.env.PORT || 3001, (err) => {
-  if (err) {
-    return console.log(err);
+  } catch (error) {
+    console.log(error)
   }
+}
 
-  console.log('Server OK');
-});
+// mongoose
+//   .connect(process.env.MONGODB_URI)
+//   .then(() => console.log('DB ok'))
+//   .catch((err) => console.log('DB error', err));
+
+start();
+
+// app.listen(process.env.PORT || 3001, (err) => {
+//   if (err) {
+//     return console.log(err);
+//   }
+
+//   console.log('Server OK');
+// });
