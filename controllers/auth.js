@@ -34,6 +34,7 @@ export const register = async (req, res) => {
 
     res.json({
       newUser, 
+      token,
       message: 'Регістрація пройшла успішно.'
     })
   } catch (error) {

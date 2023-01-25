@@ -6,7 +6,6 @@ import fileUpload from 'express-fileupload';
 import authRoute from './routes/auth.js';
 import postRoute from './routes/post.js';
 import commentRoute from './routes/comments.js'
-import { getAll } from './controllers/posts.js';
 
 mongoose.set('strictQuery', false);
 
@@ -15,9 +14,9 @@ dotenv.config();
 
 //Constants 
 const PORT = process.env.PORT || 3001;
-// const DB_USER = process.env.DB_USER;
-// const DB_PASSWORD = process.env.DB_PASSWORD;
-// const DB_NAME = process.env.DB_NAME;
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
 
 
 // Middleware
@@ -31,18 +30,16 @@ app.use('/api/auth', authRoute);
 app.use('/api/posts', postRoute);
 app.use('/api/comments', commentRoute);
 
-app.get('/', (req, res) => {
-  res.send({
-    message: 'All is fine.'
-  })
-})
-
-app.get('/api/posts', getAll);
+// app.get('/', (req, res) => {
+//   res.send({
+//     message: 'All is fine.'
+//   })
+// })
 
 async function start() {
   try {
-    // await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@lyka.qjfwbgw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`);
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@lyka.qjfwbgw.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`);
+    // await mongoose.connect(process.env.MONGODB_URI);
 
     app.listen(PORT, () => console.log(`Server started on port: ${PORT}`)
     );
