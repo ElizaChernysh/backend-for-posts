@@ -7,10 +7,10 @@ import { registerValidation, loginValidation } from '../validations/auth.js';
 const router = new Router();
 
 //Register
-router.post('/register', registerValidation, handleValidationErrors, register);
+router.post('/register', register);
 
 //Login
-router.post('/login', loginValidation, handleValidationErrors, login);
+router.post('/login', login);
 
 //Get me
 router.get('/me', checkAuth, getMe);
