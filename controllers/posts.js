@@ -46,7 +46,7 @@ export const createPost = async (req, res) => {
     return res.json(newPostWithoutImage);
 
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: 'Щось пішло не так.'
     })
   }
@@ -66,7 +66,7 @@ export const getAll = async (req, res) => {
      res.json({posts, popularPosts});
 
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: 'Не вдалося отримати всі пости'
     })
   }
@@ -81,8 +81,8 @@ export const getById = async (req, res) => {
      res.json(post);
 
   } catch (error) {
-    res.json({
-      message: 'Не вдалося отримати всі пости'
+    res.status(500).json({
+      message: 'Не вдалося отримати статтю'
     })
   }
 }
@@ -162,6 +162,6 @@ export const getPostComments = async (req, res) => {
       )
       res.json(list)
   } catch (error) {
-      res.json({ message: 'Что-то пошло не так.' })
+      res.status(500).json({ message: 'Не вдалося отримати коментарі. Проблеми на сервері' })
   }
 }
