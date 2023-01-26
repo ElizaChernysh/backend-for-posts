@@ -96,6 +96,7 @@ export const getMe = async (req, res) => {
         message: 'Такого користувача не існує.'
       })
     };
+    
 
     const token = jwt.sign({
       id: user._id,
