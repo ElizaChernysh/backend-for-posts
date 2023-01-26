@@ -10,7 +10,7 @@ export const register = async (req, res) => {
     const isUsed = await User.findOne({ username });
 
     if (isUsed) {
-      return res.json({
+      return res.status(404).json({
         message: 'Даний username вже використовується.'
       })
     }
@@ -38,7 +38,7 @@ export const register = async (req, res) => {
       message: 'Регістрація пройшла успішно.'
     })
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: 'Помилка при створенні користувача'
     })
   }
@@ -53,7 +53,7 @@ export const login = async (req, res) => {
     const user = await User.findOne({ username });
 
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         message: 'Такого користувача не існує.'
       })
     }
@@ -61,7 +61,7 @@ export const login = async (req, res) => {
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
     if (!isPasswordCorrect) {
-      return res.json({
+      return res.status(404).json({
         message: 'Неправильний пароль.'
       })
     }
@@ -80,7 +80,7 @@ export const login = async (req, res) => {
     })
 
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: 'Помилка при авторизації.'
     })
   }
@@ -92,7 +92,7 @@ export const getMe = async (req, res) => {
     const user = await User.findById(req.userId);
 
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         message: 'Такого користувача не існує.'
       })
     };
@@ -110,7 +110,7 @@ export const getMe = async (req, res) => {
     })
 
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: 'Немає доступу.'
     })
   }
