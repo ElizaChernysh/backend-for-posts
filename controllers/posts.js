@@ -40,7 +40,7 @@ export const createPost = async (req, res) => {
     });
     await newPostWithoutImage.save();
     await User.findByIdAndUpdate(req.userId, {
-      $push: { posts: newPostWithoutImage}
+      $push: { posts: newPostWithoutImage }
     });
 
     return res.json(newPostWithoutImage);
@@ -63,7 +63,7 @@ export const getAll = async (req, res) => {
       });
     }
 
-     res.json({posts, popularPosts});
+    res.json({ posts, popularPosts });
 
   } catch (error) {
     res.status(500).json({
@@ -75,10 +75,10 @@ export const getAll = async (req, res) => {
 export const getById = async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(req.params.id, {
-      $inc: {views: 1},
+      $inc: { views: 1 },
     })
 
-     res.json(post);
+    res.json(post);
 
   } catch (error) {
     res.status(500).json({
@@ -110,13 +110,13 @@ export const removePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndDelete(req.params.id);
 
-    if (!post) return res.json({message: "Такого поста не існує"});
+    if (!post) return res.json({ message: "Такого поста не існує" });
 
     await User.findByIdAndUpdate(req.userId, {
-      $pull: { posts: req.params.id}
+      $pull: { posts: req.params.id }
     })
 
-    res.json({message: 'Пост був видалений.'});
+    res.json({ message: 'Пост був видалений.' });
 
   } catch (error) {
     res.json({
@@ -127,7 +127,7 @@ export const removePost = async (req, res) => {
 
 export const updatePost = async (req, res) => {
   try {
-    const {title, text, id} = req.body;
+    const { title, text, id } = req.body;
     const post = await Post.findById(id);
 
     if (req.files) {
@@ -135,14 +135,14 @@ export const updatePost = async (req, res) => {
       const __dirname = dirname(fileURLToPath(import.meta.url))
       req.files.image.mv(path.join(__dirname, '..', 'uploads', fileName))
       post.imgUrl = fileName || ''
-  }
+    }
 
-  post.title = title
-  post.text = text
+    post.title = title
+    post.text = text
 
-  await post.save();
+    await post.save();
 
-  res.json(post);
+    res.json(post);
 
   } catch (error) {
     res.json({
@@ -154,14 +154,14 @@ export const updatePost = async (req, res) => {
 // Get Post Comments
 export const getPostComments = async (req, res) => {
   try {
-      const post = await Post.findById(req.params.id)
-      const list = await Promise.all(
-          post.comments.map((comment) => {
-              return Comment.findById(comment)
-          }),
-      )
-      res.json(list)
+    const post = await Post.findById(req.params.id)
+    const list = await Promise.all(
+      post.comments.map((comment) => {
+        return Comment.findById(comment)
+      }),
+    )
+    res.json(list)
   } catch (error) {
-      res.status(500).json({ message: 'Не вдалося отримати коментарі. Проблеми на сервері' })
+    res.status(500).json({ message: 'Не вдалося отримати коментарі. Проблеми на сервері' })
   }
 }
